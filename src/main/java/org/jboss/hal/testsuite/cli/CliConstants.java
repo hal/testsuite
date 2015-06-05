@@ -54,4 +54,5 @@ public class CliConstants {
     public static final String DOMAIN_HTTP_INTERFACE_ADDRESS = "/host=master/core-service=management/management-interface=http-interface";
     public static final String STANDALONE_HTTP_INTERFACE_ADDRESS = "/core-service=management/management-interface=http-interface";
     public static final String CACHE_CONTAINER_ADDRESS = "/subsystem=infinispan/cache-container";
+    public static final String DEPLOYMENT_SCANNER_ADDRESS = "/subsystem=deployment-scanner/scanner";
 }
