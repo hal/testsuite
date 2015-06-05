@@ -54,12 +54,15 @@ public class ConfigAreaChecker {
 
         List<String> inputsToClear = new ArrayList<>();
         private boolean defineFirst = false;
+        private boolean defineClass = false;
         private boolean expectedChange = true;
 
         private String defineIdentifier;
+        private String defineClassIdentifier;
         private String rowName;
         private String tab;
         private String dmrAttribute;
+        private ResourceVerifier insideVerifier;
 
         private Builder(ConfigPage page, EditorType type, String identifier, String value) {
             this.page = page;
@@ -80,6 +83,11 @@ public class ConfigAreaChecker {
             this.type = type;
             this.identifier = identifier;
             this.lineValues = value;
+        }
+
+        public Builder withVerifier(ResourceVerifier verifier) {
+            this.insideVerifier = verifier;
+            return this;
         }
 
         public Builder rowName(String rowName) {
@@ -113,6 +121,20 @@ public class ConfigAreaChecker {
             return this;
         }
 
+        public Builder defineClass(String identifier) {
+            defineClass = true;
+            defineClassIdentifier = identifier;
+            return this;
+        }
+
+        public Builder defineFirst(String defineIdentifier, String defineClassIdentifier) {
+            this.defineFirst = true;
+            this.defineIdentifier = defineIdentifier;
+            this.defineClass = true;
+            this.defineClassIdentifier = defineClassIdentifier;
+            return this;
+        }
+
         public void invoke() {
             if (dmrAttribute == null) dmrAttribute = identifier;
             if (rowName != null) page.getResourceManager().selectByName(rowName);
@@ -125,6 +147,9 @@ public class ConfigAreaChecker {
             Editor edit = fragment.edit();
             if (defineFirst) {
                 edit.checkbox(defineIdentifier, true);
+            }
+            if (defineClass) {
+                edit.text(defineClassIdentifier, "clazz");
             }
             for(String i : inputsToClear){
                 edit.text(i, "");
@@ -145,6 +170,9 @@ public class ConfigAreaChecker {
             }
             fragment.saveAndAssert(expectedChange);
             if (expectedChange) {
+                if (this.insideVerifier == null) {
+                    this.insideVerifier = verifier;
+                }
                 switch (type) {
                     case TEXTAREA:
                         verifier.verifyAttribute(dmrAttribute, lineValues);
