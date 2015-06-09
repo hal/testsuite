@@ -1,11 +1,13 @@
 package org.jboss.hal.testsuite.test.util;
 
 import org.jboss.arquillian.graphene.Graphene;
+import org.jboss.arquillian.graphene.findby.ByJQuery;
 import org.jboss.hal.testsuite.fragment.ConfigAreaFragment;
 import org.jboss.hal.testsuite.fragment.ConfigFragment;
 import org.jboss.hal.testsuite.fragment.formeditor.Editor;
 import org.jboss.hal.testsuite.page.ConfigPage;
 import org.jboss.hal.testsuite.util.ResourceVerifier;
+import org.openqa.selenium.By;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +65,7 @@ public class ConfigAreaChecker {
         private String tab;
         private String dmrAttribute;
         private ResourceVerifier insideVerifier;
+        private String disclosureLabel;
 
         private Builder(ConfigPage page, EditorType type, String identifier, String value) {
             this.page = page;
@@ -135,6 +138,11 @@ public class ConfigAreaChecker {
             return this;
         }
 
+        public Builder disclose(String label) {
+            this.disclosureLabel = label;
+            return this;
+        }
+
         public void invoke() {
             if (dmrAttribute == null) dmrAttribute = identifier;
             if (rowName != null) page.getResourceManager().selectByName(rowName);
@@ -145,6 +153,10 @@ public class ConfigAreaChecker {
             }
             fragment = Graphene.createPageFragment(ConfigFragment.class, area.getRoot());
             Editor edit = fragment.edit();
+            if (disclosureLabel != null) {
+                By disclosure = ByJQuery.selector("a.header:has(td:contains('" + disclosureLabel + "'):visible)");
+                fragment.getRoot().findElement(disclosure).click();
+            }
             if (defineFirst) {
                 edit.checkbox(defineIdentifier, true);
             }
@@ -175,14 +187,14 @@ public class ConfigAreaChecker {
                 }
                 switch (type) {
                     case TEXTAREA:
-                        verifier.verifyAttribute(dmrAttribute, lineValues);
+                        insideVerifier.verifyAttribute(dmrAttribute, lineValues);
                         break;
                     case SELECT:
                     case TEXT:
-                        verifier.verifyAttribute(dmrAttribute, stringValue);
+                        insideVerifier.verifyAttribute(dmrAttribute, stringValue);
                         break;
                     case CHECKBOX:
-                        verifier.verifyAttribute(dmrAttribute, String.valueOf(booleanValue));
+                        insideVerifier.verifyAttribute(dmrAttribute, String.valueOf(booleanValue));
                         break;
                 }
             } else {
