@@ -5,7 +5,6 @@ import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.Graphene;
 import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.junit.InSequence;
 import org.jboss.hal.testsuite.cli.CliClient;
 import org.jboss.hal.testsuite.cli.CliClientFactory;
 import org.jboss.hal.testsuite.cli.CliConstants;
@@ -47,21 +46,21 @@ public class DeploymentScannersTestCase {
     }
 
     @Test
-    @InSequence(0)
     public void createDeploymentScanner() {
         DeploymentScannerWizard wizard = page.addDeploymentScanner();
 
-        boolean result = wizard.finish();
+        boolean result = wizard.name(DEPLOYMENT_SCANNER)
+                .path("deployments")
+                .relativeTo("jboss.server.base.dir")
+                .scanInterval("45")
+                .deploymentTimeout("60")
+                .enabled(true)
+                .finish();
 
         Assert.assertTrue("Window should be closed", result);
         verifier.verifyResource(true);
-    }
 
-    @Test
-    @InSequence(1)
-    public void removeDeploymentScanner(){
         page.removeDeploymentScanner(DEPLOYMENT_SCANNER);
-
         verifier.verifyResource(false);
     }
 }
