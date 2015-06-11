@@ -57,18 +57,6 @@ public class JvmMetricsTestCase {
     }
 
     @Test
-    public void nonHeapUsageMetrics(){
-        MetricsAreaFragment metricsArea = jvmPage.getNonHeapUsageMetricsArea();
-        double expectedUsedPercentage = metricsArea.getPercentage(USED, MAX);
-        double expectedCommittedPercentage = metricsArea.getPercentage(COMMITTED, MAX);
-        MetricsFragment usedMetrics = metricsArea.getMetricsFragment(USED);
-        MetricsFragment committedMetrics = metricsArea.getMetricsFragment(COMMITTED);
-
-        assertEquals(expectedUsedPercentage, usedMetrics.getPercentage(), DELTA);
-        assertEquals(expectedCommittedPercentage, committedMetrics.getPercentage(), DELTA);
-    }
-
-    @Test
     public void threadUsageMetrics(){
         MetricsAreaFragment metricsArea = jvmPage.getThreadUsageMetricsArea();
         double expectedUsagePercentage = metricsArea.getPercentage(DAEMON, LIVE);
