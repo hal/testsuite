@@ -14,6 +14,7 @@ import org.jboss.hal.testsuite.fragment.formeditor.Editor;
 import org.jboss.hal.testsuite.page.config.DistributedCachePage;
 import org.jboss.hal.testsuite.test.category.Shared;
 import org.jboss.hal.testsuite.test.util.ConfigAreaChecker;
+import org.jboss.hal.testsuite.util.ConfigUtils;
 import org.jboss.hal.testsuite.util.Console;
 import org.jboss.hal.testsuite.util.ResourceVerifier;
 import org.junit.Assert;
@@ -24,6 +25,7 @@ import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
 import static org.jboss.hal.testsuite.cli.CliConstants.CACHE_CONTAINER_ADDRESS;
+import static org.jboss.hal.testsuite.cli.CliConstants.DOMAIN_CACHE_CONTAINER_ADDRESS;
 
 /**
  * @author mkrajcov <mkrajcov@redhat.com>
@@ -36,7 +38,7 @@ public class DistributedCacheTestCase {
     private static final String CACHE_NAME = "cn_" + RandomStringUtils.randomAlphanumeric(5);
     private static final String JNDI_NAME = "java:/" + CACHE_NAME;
 
-    private static final String CACHE_DMR = CACHE_CONTAINER_ADDRESS + "=" + CACHE_CONTAINER + "/distributed-cache=" + CACHE_NAME;
+    private static final String CACHE_DMR = (ConfigUtils.isDomain() ? DOMAIN_CACHE_CONTAINER_ADDRESS : CACHE_CONTAINER_ADDRESS) + "=" + CACHE_CONTAINER + "/distributed-cache=" + CACHE_NAME;
 
     private CliClient client = CliClientFactory.getClient();
     private ResourceVerifier verifier = new ResourceVerifier(CACHE_DMR, client);

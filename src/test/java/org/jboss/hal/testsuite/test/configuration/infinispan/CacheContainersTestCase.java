@@ -11,6 +11,7 @@ import org.jboss.hal.testsuite.cli.CliClientFactory;
 import org.jboss.hal.testsuite.page.config.CacheContainersPage;
 import org.jboss.hal.testsuite.test.category.Shared;
 import org.jboss.hal.testsuite.test.util.ConfigAreaChecker;
+import org.jboss.hal.testsuite.util.ConfigUtils;
 import org.jboss.hal.testsuite.util.Console;
 import org.jboss.hal.testsuite.util.ResourceVerifier;
 import org.junit.Before;
@@ -21,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
 import static org.jboss.hal.testsuite.cli.CliConstants.CACHE_CONTAINER_ADDRESS;
+import static org.jboss.hal.testsuite.cli.CliConstants.DOMAIN_CACHE_CONTAINER_ADDRESS;
 
 /**
  * @author mkrajcov <mkrajcov@redhat.com>
@@ -30,7 +32,7 @@ import static org.jboss.hal.testsuite.cli.CliConstants.CACHE_CONTAINER_ADDRESS;
 public class CacheContainersTestCase {
 
     private static final String CACHE_CONTAINER_NAME = "cc_" + RandomStringUtils.randomAlphabetic(5);
-    private static final String CACHE_DMR = CACHE_CONTAINER_ADDRESS + "=" + CACHE_CONTAINER_NAME;
+    private static final String CACHE_DMR = (ConfigUtils.isDomain() ? DOMAIN_CACHE_CONTAINER_ADDRESS : CACHE_CONTAINER_ADDRESS) + "=" + CACHE_CONTAINER_NAME;
     private static final String TRANSPORT_DMR = CACHE_DMR +"/transport=TRANSPORT";
     private static final String JNDI_NAME = "java:/" + CACHE_CONTAINER_NAME;
     private static final String START = "EAGER";
