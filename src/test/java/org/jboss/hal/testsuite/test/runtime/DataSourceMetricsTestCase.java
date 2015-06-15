@@ -41,8 +41,7 @@ public class DataSourceMetricsTestCase {
     public void before(){
         browser.navigate().refresh();
         Graphene.goTo(DataSourcesMetricsPage.class);
-        browser.manage().window().maximize();
-        Console.withBrowser(browser).waitUntilLoaded();
+        Console.withBrowser(browser).maximizeWindow().waitUntilLoaded();
     }
 
     @Test

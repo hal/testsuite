@@ -40,8 +40,7 @@ public class JvmMetricsTestCase {
     public void before(){
         browser.navigate().refresh();
         Graphene.goTo(JVMPage.class);
-        browser.manage().window().maximize();
-        Console.withBrowser(browser).waitUntilLoaded();
+        Console.withBrowser(browser).maximizeWindow().waitUntilLoaded();
     }
 
     @Test

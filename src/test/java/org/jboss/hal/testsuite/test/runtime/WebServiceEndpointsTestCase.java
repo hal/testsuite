@@ -37,8 +37,7 @@ public class WebServiceEndpointsTestCase {
     public void before(){
         browser.navigate().refresh();
         Graphene.goTo(WebServiceEndpointsPage.class);
-        browser.manage().window().maximize();
-        Console.withBrowser(browser).waitUntilLoaded();
+        Console.withBrowser(browser).maximizeWindow().waitUntilLoaded();
     }
 
     @Test

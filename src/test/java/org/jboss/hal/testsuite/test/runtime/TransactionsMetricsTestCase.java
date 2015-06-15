@@ -38,15 +38,14 @@ public class TransactionsMetricsTestCase {
     private TransactionsMetricsPage tmPage;
 
     @Before
-    public void before(){
+    public void before() {
         browser.navigate().refresh();
         Graphene.goTo(TransactionsMetricsPage.class);
-        browser.manage().window().maximize();
-        Console.withBrowser(browser).waitUntilLoaded();
+        Console.withBrowser(browser).maximizeWindow().waitUntilLoaded();
     }
 
     @Test
-    public void successRationMetrics(){
+    public void successRationMetrics() {
         MetricsAreaFragment metricsArea = tmPage.getSuccessRationMetricsArea();
         double expectedCommittedPercentage = metricsArea.getPercentage(COMMITTED, NUMBER_OF_TRANSACTIONS);
         double expectedAbortedPercentage = metricsArea.getPercentage(ABORTED, NUMBER_OF_TRANSACTIONS);
@@ -62,7 +61,7 @@ public class TransactionsMetricsTestCase {
     }
 
     @Test
-    public void failureOriginMetrics(){
+    public void failureOriginMetrics() {
         MetricsAreaFragment metricsArea = tmPage.getFailureOriginMetricsArea();
         MetricsFragment appFailuresMetrics = metricsArea.getMetricsFragment(APPLICATION_FAILURES);
         MetricsFragment resFailuresMetrics = metricsArea.getMetricsFragment(RESOURCE_FAILURES);
