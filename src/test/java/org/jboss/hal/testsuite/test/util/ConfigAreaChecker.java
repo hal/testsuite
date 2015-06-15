@@ -7,6 +7,7 @@ import org.jboss.hal.testsuite.fragment.ConfigFragment;
 import org.jboss.hal.testsuite.fragment.formeditor.Editor;
 import org.jboss.hal.testsuite.page.ConfigPage;
 import org.jboss.hal.testsuite.util.ResourceVerifier;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 
 import java.util.ArrayList;
@@ -180,7 +181,12 @@ public class ConfigAreaChecker {
                     edit.select(identifier, stringValue);
                     break;
             }
-            fragment.saveAndAssert(expectedChange);
+            boolean finished = fragment.save();
+            if (expectedChange) {
+                Assert.assertTrue("Config was supposed to be saved successfully, read view should be active.", finished);
+            } else {
+                Assert.assertFalse("Config wasn't supposed to be saved, read-write view should be active.", finished);
+            }
             if (expectedChange) {
                 if (this.insideVerifier == null) {
                     this.insideVerifier = verifier;
