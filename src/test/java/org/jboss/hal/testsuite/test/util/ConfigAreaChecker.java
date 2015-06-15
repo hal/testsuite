@@ -56,12 +56,8 @@ public class ConfigAreaChecker {
         private EditorType type;
 
         List<String> inputsToClear = new ArrayList<>();
-        private boolean defineFirst = false;
-        private boolean defineClass = false;
         private boolean expectedChange = true;
 
-        private String defineIdentifier;
-        private String defineClassIdentifier;
         private String rowName;
         private String tab;
         private String dmrAttribute;
@@ -109,12 +105,6 @@ public class ConfigAreaChecker {
             return this;
         }
 
-        public Builder defineFirst(String defineIdentifier) {
-            this.defineFirst = true;
-            this.defineIdentifier = defineIdentifier;
-            return this;
-        }
-
         public Builder expectError() {
             this.expectedChange = false;
             return this;
@@ -122,20 +112,6 @@ public class ConfigAreaChecker {
 
         public Builder clear(String input){
             inputsToClear.add(input);
-            return this;
-        }
-
-        public Builder defineClass(String identifier) {
-            defineClass = true;
-            defineClassIdentifier = identifier;
-            return this;
-        }
-
-        public Builder defineFirst(String defineIdentifier, String defineClassIdentifier) {
-            this.defineFirst = true;
-            this.defineIdentifier = defineIdentifier;
-            this.defineClass = true;
-            this.defineClassIdentifier = defineClassIdentifier;
             return this;
         }
 
@@ -157,12 +133,6 @@ public class ConfigAreaChecker {
             if (disclosureLabel != null) {
                 By disclosure = ByJQuery.selector("a.header:has(td:contains('" + disclosureLabel + "'):visible)");
                 fragment.getRoot().findElement(disclosure).click();
-            }
-            if (defineFirst) {
-                edit.checkbox(defineIdentifier, true);
-            }
-            if (defineClass) {
-                edit.text(defineClassIdentifier, "clazz");
             }
             for(String i : inputsToClear){
                 edit.text(i, "");
