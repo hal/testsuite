@@ -6,6 +6,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.hal.testsuite.category.Standalone;
 import org.jboss.hal.testsuite.cli.CliClient;
 import org.jboss.hal.testsuite.cli.CliClientFactory;
+import org.jboss.hal.testsuite.cli.Library;
 import org.jboss.hal.testsuite.page.config.WebServicesPage;
 import org.jboss.hal.testsuite.test.util.ConfigAreaChecker;
 import org.jboss.hal.testsuite.util.Console;
@@ -49,36 +50,45 @@ public class WebServicesTestCase {
     @Before
     public void before() {
         Console.withBrowser(browser).refreshAndNavigate(WebServicesPage.class);
+        Console.withBrowser(browser).waitUntilLoaded();
     }
 
     @Test
     public void modifySoapAddress() {
+        Library.letsSleep(5000);
         checker.editCheckboxAndAssert(page, MODIFY_SOAP_ADDRESS_ID, false).dmrAttribute(MODIFY_SOAP_ADDRESS_DMR).invoke();
+        Console.withBrowser(browser).waitUntilLoaded();
+        Library.letsSleep(5000);
         checker.editCheckboxAndAssert(page, MODIFY_SOAP_ADDRESS_ID, true).dmrAttribute(MODIFY_SOAP_ADDRESS_DMR).invoke();
     }
 
     @Test
     public void setWsdlPort() {
+        Library.letsSleep(5000);
         checker.editTextAndAssert(page, WSDL_PORT_ID, PORT_VALUE).invoke();
     }
 
     @Test
     public void setWsdlPortNegative() {
+        Library.letsSleep(5000);
         checker.editTextAndAssert(page, WSDL_PORT_ID, PORT_VALUE_NEGATIVE).expectError().invoke();
     }
 
     @Test
     public void setWsdlSecurePort() {
+        Library.letsSleep(5000);
         checker.editTextAndAssert(page, WSDL_SECURE_PORT_ID, PORT_VALUE).invoke();
     }
 
     @Test
     public void setWsdlSecurePortNegative() {
+        Library.letsSleep(5000);
         checker.editTextAndAssert(page, WSDL_SECURE_PORT_ID, PORT_VALUE_NEGATIVE).expectError().invoke();
     }
 
     @Test
     public void setWsdlHostSimpleIP() {
+        Library.letsSleep(5000);
         checker.editTextAndAssert(page, WSDL_HOST_ID, SIMPLE_IP).invoke();
     }
 
