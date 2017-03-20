@@ -451,6 +451,7 @@ public class ElytronSslContextTestCase extends AbstractElytronTestCase {
             ops.removeIfExists(serverSSLContextAddress);
             ops.removeIfExists(trustManagerAddress);
             ops.removeIfExists(keyManagerAddress);
+            ops.removeIfExists(keyStoreAddress);
             adminOps.reloadIfRequired();
         }
     }
@@ -579,6 +580,7 @@ public class ElytronSslContextTestCase extends AbstractElytronTestCase {
             ops.removeIfExists(clientSSLContextAddress);
             ops.removeIfExists(trustManagerAddress);
             ops.removeIfExists(keyManagerAddress);
+            ops.remove(keyStoreAddress);
             adminOps.reloadIfRequired();
         }
     }
