@@ -259,6 +259,7 @@ public class MailServerTestCase {
                     .editAndSave(ConfigChecker.InputType.TEXT, attributeName, value)
                     .verifyFormSaved()
                     .verifyAttribute(attributeName, value, "Probably fails because of https://issues.jboss.org/browse/HAL-1349");
+
         } finally {
             client.apply(new RemoveSocketBinding(value));
         }
