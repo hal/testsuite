@@ -51,4 +51,12 @@ public class BaseFragment {
         return root.findElement(ByJQuery.selector(
                 "tr[data-dmr-attr='" + dmrAttributeName + "'] .form-item-value:visible")).getAttribute("textContent");
     }
+
+    /**
+     * @param dmrAttributeNameSubstring .. {@code data-dmr-attr} attribute of {@code <tr>} tag substring
+     */
+    public String getAttributeValueBySubstring(String dmrAttributeNameSubstring) {
+        return root.findElement(ByJQuery.selector(
+            "tr[data-dmr-attr*='" + dmrAttributeNameSubstring + "'] .form-item-value:visible")).getAttribute("textContent");
+    }
 }

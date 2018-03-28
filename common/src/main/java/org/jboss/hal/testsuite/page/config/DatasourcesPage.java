@@ -5,6 +5,7 @@ import org.jboss.hal.testsuite.finder.Column;
 import org.jboss.hal.testsuite.finder.FinderNames;
 import org.jboss.hal.testsuite.finder.FinderNavigation;
 import org.jboss.hal.testsuite.finder.Row;
+import org.jboss.hal.testsuite.fragment.config.datasource.ConnectionConfig;
 import org.jboss.hal.testsuite.fragment.config.datasource.DatasourceConfigArea;
 import org.jboss.hal.testsuite.fragment.config.datasource.DatasourceWizard;
 import org.jboss.hal.testsuite.fragment.config.datasource.PoolConfig;
@@ -41,6 +42,10 @@ public class DatasourcesPage extends ConfigurationPage implements Navigatable {
 
     public PoolConfig getPoolConfig() {
         return getConfig().switchTo("Pool", PoolConfig.class);
+    }
+
+    public ConnectionConfig getConnectionConfig() {
+        return getConfig().switchTo("Connection", ConnectionConfig.class);
     }
 
     private enum DatasourceType {
