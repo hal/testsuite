@@ -20,6 +20,11 @@ public class MessagingStatisticsPage extends MetricsPage {
         return this;
     }
 
+    public MessagingStatisticsPage switchToTopics() {
+        switchSubTab("Topics");
+        return this;
+    }
+
     public MessagingStatisticsPage refresh() {
         clickButton("Refresh");
         return this;
@@ -27,6 +32,11 @@ public class MessagingStatisticsPage extends MetricsPage {
 
     public MessagingStatisticsPage selectConnectionFactory(String connectionFactoryName) {
         getResourceManager().selectByName(connectionFactoryName);
+        return this;
+    }
+
+    public MessagingStatisticsPage selectTopic(String topicName) {
+        getResourceManager().selectByName(topicName);
         return this;
     }
 }
