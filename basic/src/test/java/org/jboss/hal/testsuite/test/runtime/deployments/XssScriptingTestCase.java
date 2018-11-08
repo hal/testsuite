@@ -30,12 +30,11 @@ import java.util.concurrent.TimeoutException;
 
 
 /**
- * @author <a href="padamec@redhat.com">Petr Adamec</a>
+ * @author <a href="mailto:padamec@redhat.com">Petr Adamec</a>
  */
 @RunWith(Arquillian.class)
 @Category(Standalone.class)
 public class XssScriptingTestCase {
-    private static final String FILE_PATH = "src/test/resources/";
     private static final String FILE_NAME = "mockWar.war";
     private static final String SHORT_NAME = "xss<svg/onload=alert(document.domain)>xss";
     private static final String NAME = SHORT_NAME + " --disabled";
@@ -48,17 +47,9 @@ public class XssScriptingTestCase {
     @Drone
     WebDriver browser;
 
-    @Before
-    public void before() {
-        navigation = new FinderNavigation(browser, StandaloneDeploymentEntryPoint.class);
-    }
-
-
     @BeforeClass
     public static void setUp() throws IOException, TimeoutException, InterruptedException, CommandFailedException {
-        administration.reloadIfRequired();
-
-        client.apply(new DeployCommand.Builder(FILE_PATH + FILE_NAME)
+        client.apply(new DeployCommand.Builder(XssScriptingTestCase.class.getClassLoader().getResource(FILE_NAME).getFile())
                 .name(NAME)
                 .build());
     }
@@ -67,15 +58,21 @@ public class XssScriptingTestCase {
     public static void cleanUp() throws IOException, CommandFailedException, OperationException, TimeoutException, InterruptedException {
         try {
             ops.undeployIfExists(SHORT_NAME);
-            administration.restartIfRequired();
             administration.reloadIfRequired();
         } finally {
             client.close();
         }
     }
 
+    @Before
+    public void before() {
+        navigation = new FinderNavigation(browser, StandaloneDeploymentEntryPoint.class);
+    }
+
+
     /**
      * Test if any alert window is displayed.
+     * <a href="issues.jboss.org/browse/HAL-1511">HAL-1511</a>
      */
     @Test
     public void testIfAlertWindowIsDisplayed() {
