@@ -1,3 +1,7 @@
+---
+# ⚠️ This is a legacy testsuite! For latest WildFly HAL tests see https://github.com/hal/testsuite.next
+---
+
 # Testsuite
 Selenium testsuite for the HAL management console. It uses [Drone](https://docs.jboss.org/author/display/ARQ/Drone) 
 and [Graphene](https://docs.jboss.org/author/display/ARQGRA2/Home) Arquillian extensions.
